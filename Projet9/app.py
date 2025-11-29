@@ -141,7 +141,8 @@ if summarize_button:
         st.info("Please upload a PDF or enter some text above.")
     
     if document_text.strip():
-        st.write("Summarizing, please wait...")
+        loading_placeholder = st.empty()
+        loading_placeholder.write("🍳👨‍🍳 please wait... 🥘🍲")
         chunks = chunk_text(document_text)
         summary = ""
         for chunk in chunks:
@@ -150,6 +151,8 @@ if summarize_button:
                 summary += result[0]['summary_text'].strip() + "\n"
             except Exception as e:
                 summary += "[Error in summarization]\n"
+        
+        loading_placeholder.empty()
         st.markdown("### Summary:")
         st.text_area("", summary.strip(), height=140)
     else:
